@@ -67,7 +67,7 @@ public class Main {
             Scanner myReader = new Scanner(library);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                books.add(data);
+                books.add(data + "\n");
             }
             myReader.close();
         } catch (FileNotFoundException e) {
@@ -115,7 +115,7 @@ public class Main {
         while(!validInput) {
             int input = scanner.nextInt();
             if(input == 1) {
-                System.out.println(printBooks().size() == 0 ? "No books stored in the library" : String.join("\n\n", printBooks()));
+                System.out.println(printBooks().size() == 0 ? "No books stored in the library" : String.join("\n", printBooks()));
                 validInput = true;
             } else if(input == 2) {
                 writeToFile(getInput());
@@ -131,7 +131,9 @@ public class Main {
 
     public static void deleteBook() {
         System.out.println("Enter the ISBN of the book you want to delete");
-        System.out.println(readFile());
+        int ISBN = scanner.nextInt();
+        ArrayList<String> books = readFile();
+        System.out.println(books.size());
         //not finished
     }
 }
