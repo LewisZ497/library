@@ -1,44 +1,40 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
+    // might refactor the code one day to use this, although there is no reason as to why to do so atm.
+    private static final ArrayList<Book> Books = new ArrayList<>();
     private static final File library = new File("library.txt");
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-	// write your code here
         createFile();
         menu();
     }
 
-    public static ArrayList<String> getInput() {
+    public static ArrayList<Book> getInput() {
         boolean add = true;
-        ArrayList<String> books = new ArrayList<>();
+        ArrayList<Book> addBooks = new ArrayList<>();
         while(add) {
-            String book = "";
+            //Book book = new Book();
             System.out.println("Enter the book title");
-            book += scanner.next();
+            //book.setTitle(scanner.next());
             System.out.println("Enter the ISBN");
-            book += "," + scanner.nextInt();
+            //book.setISBN(scanner.nextInt());
             System.out.println("Enter the author");
-            book += "," + scanner.next();
+            //book.setAuthor(scanner.next());
             System.out.println("Enter the genre");
-            book += "," + scanner.next();
-            books.add(book);
+            //book.setGenre(scanner.next());
+            //addBooks.add(book);
             System.out.println("Would you like to add another book? (yes/no)");
             boolean validInput = false;
             while(!validInput) {
                 String addAnother = scanner.next();
                 if(addAnother.equalsIgnoreCase("yes")) {
                     validInput = true;
-                    book += "\n";
                 } else if(addAnother.equalsIgnoreCase("no")) {
                     add = false;
                     validInput = true;
@@ -47,7 +43,7 @@ public class Main {
                 }
             }
         }
-        return books;
+        return addBooks;
     }
 
     public static void createFile() {
@@ -114,17 +110,21 @@ public class Main {
         boolean validInput = false;
         while(!validInput) {
             int input = scanner.nextInt();
-            if(input == 1) {
-                System.out.println(printBooks().size() == 0 ? "No books stored in the library" : String.join("\n", printBooks()));
-                validInput = true;
-            } else if(input == 2) {
-                writeToFile(getInput());
-                validInput = true;
-            } else if(input == 3) {
-                deleteBook();
-                validInput = true;
-            } else {
-                System.out.println("Invalid input");
+            switch (input) {
+                case 1:
+                    System.out.println(printBooks().size() == 0 ? "No books stored in the library" : String.join("\n", printBooks()));
+                    validInput = true;
+                    break;
+                case 2:
+                    //writeToFile(getInput());
+                    validInput = true;
+                    break;
+                case 3:
+                    deleteBook();
+                    validInput = true;
+                    break;
+                default:
+                    System.out.println("Invalid input");
             }
         }
     }
@@ -135,5 +135,6 @@ public class Main {
         ArrayList<String> books = readFile();
         System.out.println(books.size());
         //not finished
+        System.out.println("Among Us");
     }
 }
