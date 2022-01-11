@@ -5,7 +5,6 @@ import java.util.*;
 
 public class Main {
 
-    // might refactor the code one day to use this, although there is no reason as to why to do so atm.
     private static final ArrayList<Book> Books = new ArrayList<>();
     private static final File library = new File("library.txt");
     private static final Scanner scanner = new Scanner(System.in);
@@ -19,6 +18,7 @@ public class Main {
         boolean add = true;
         ArrayList<Book> addBooks = new ArrayList<>();
         while(add) {
+            Book book = new Book("yes", 24873, "fearful", "yes");
             //Book book = new Book();
             System.out.println("Enter the book title");
             //book.setTitle(scanner.next());
