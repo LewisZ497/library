@@ -14,21 +14,25 @@ public class Main {
         menu();
     }
 
-    public static ArrayList<Book> getInput() {
+    public static ArrayList<Book> getBooks() {
+      ArrayList<Book> books = new ArrayList<>();
+      return books; //still need to finish
+    };
+
+    public static ArrayList<Book> getBookDetails() {
         boolean add = true;
         ArrayList<Book> addBooks = new ArrayList<>();
         while(add) {
-            Book book = new Book("yes", 24873, "fearful", "yes");
-            //Book book = new Book();
             System.out.println("Enter the book title");
-            //book.setTitle(scanner.next());
+            String bookName = scanner.next();
             System.out.println("Enter the ISBN");
-            //book.setISBN(scanner.nextInt());
+            Integer bookISBN = scanner.nextInt();
             System.out.println("Enter the author");
-            //book.setAuthor(scanner.next());
+            String bookAuthor = scanner.next();
             System.out.println("Enter the genre");
-            //book.setGenre(scanner.next());
-            //addBooks.add(book);
+            String bookGenre = scanner.next();
+            Book book = new Book(bookName, bookISBN, bookAuthor, bookGenre);
+            addBooks.add(book);
             System.out.println("Would you like to add another book? (yes/no)");
             boolean validInput = false;
             while(!validInput) {
@@ -88,10 +92,10 @@ public class Main {
         return prettyBooks;
     }
 
-    public static void writeToFile(ArrayList<String> books) {
+    public static void writeToFile(ArrayList<Book> books) {
         try {
             FileWriter myWriter = new FileWriter(library.getName(), true);
-            for (String book : books) {
+            for (Book book : books) {
                 myWriter.write(book + "\n");
             }
             myWriter.close();
@@ -116,7 +120,7 @@ public class Main {
                     validInput = true;
                     break;
                 case 2:
-                    //writeToFile(getInput());
+                    writeToFile(getBookDetails());
                     validInput = true;
                     break;
                 case 3:
@@ -130,8 +134,8 @@ public class Main {
     }
 
     public static void deleteBook() {
-        System.out.println("Enter the ISBN of the book you want to delete");
-        int ISBN = scanner.nextInt();
+        System.out.println("Enter the name of the book you want to delete");
+        String name = scanner.next();
         ArrayList<String> books = readFile();
         System.out.println(books.size());
         //not finished
