@@ -2,22 +2,13 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class Borrower {
+public class Borrower extends User {
 
-    private String name;
     private ArrayList<Book> books;
 
     public Borrower(String name, ArrayList<Book> books) {
-        this.name = name;
+        super(name);
         this.books = books;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public ArrayList<Book> getBooks() {

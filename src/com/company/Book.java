@@ -3,11 +3,11 @@ package com.company;
 public class Book {
 
     private String title;
-    private int ISBN;
+    private String ISBN;
     private String author;
     private String genre;
 
-    public Book(String title, int ISBN, String author, String genre) {
+    public Book(String title, String ISBN, String author, String genre) {
         this.title = title;
         this.ISBN = ISBN;
         this.author = author;
@@ -22,11 +22,11 @@ public class Book {
         this.title = title;
     }
 
-    public int getISBN() {
+    public String getISBN() {
         return ISBN;
     }
 
-    public void setISBN(int ISBN) {
+    public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
 

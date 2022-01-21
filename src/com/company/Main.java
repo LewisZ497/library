@@ -2,41 +2,37 @@ package com.company;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
-    private static final ArrayList<Book> Books = new ArrayList<>();
     private static final File library = new File("library.txt");
-    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         createFile();
         menu();
     }
 
-    public static ArrayList<Book> getBooks() {
-      ArrayList<Book> books = new ArrayList<>();
-      return books; //still need to finish
-    };
+    public static String getInput(String question) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(question);
+        return scanner.nextLine();
+    }
 
     public static ArrayList<Book> getBookDetails() {
         boolean add = true;
         ArrayList<Book> addBooks = new ArrayList<>();
         while(add) {
-            System.out.println("Enter the book title");
-            String bookName = scanner.next();
-            System.out.println("Enter the ISBN");
-            Integer bookISBN = scanner.nextInt();
-            System.out.println("Enter the author");
-            String bookAuthor = scanner.next();
-            System.out.println("Enter the genre");
-            String bookGenre = scanner.next();
+            String bookName = getInput("Enter the title");
+            String bookISBN = getInput("Enter the ISBN");
+            String bookAuthor = getInput("Enter the author");
+            String bookGenre = getInput("Enter the genre");
             Book book = new Book(bookName, bookISBN, bookAuthor, bookGenre);
             addBooks.add(book);
-            System.out.println("Would you like to add another book? (yes/no)");
             boolean validInput = false;
             while(!validInput) {
-                String addAnother = scanner.next();
+                String addAnother = getInput("Would you like to add another book? (yes/no)");
                 if(addAnother.equalsIgnoreCase("yes")) {
                     validInput = true;
                 } else if(addAnother.equalsIgnoreCase("no")) {
@@ -77,7 +73,7 @@ public class Main {
         return books;
     }
 
-    public static ArrayList<String> printBooks() {
+    public static ArrayList<String> formatBooks() {
         ArrayList<String> books = readFile();
         ArrayList<String> prettyBooks = new ArrayList<>();
         for (String book : books) {
@@ -96,7 +92,7 @@ public class Main {
         try {
             FileWriter myWriter = new FileWriter(library.getName(), true);
             for (Book book : books) {
-                myWriter.write(book + "\n");
+                myWriter.write(book.getTitle() + "," + book.getISBN() + "," + book.getAuthor() + "," + book.getGenre() + "\n");
             }
             myWriter.close();
             System.out.println("Added books to the library");
@@ -107,16 +103,15 @@ public class Main {
     }
 
     public static void menu() {
-        System.out.println("Would you like to:" +
-                "\n1. Print the books in the library" +
-                "\n2. Add books to the library" +
-                "\n3. Remove a book from the library");
         boolean validInput = false;
         while(!validInput) {
-            int input = scanner.nextInt();
+            int input = Integer.parseInt(getInput("Would you like to:" +
+                    "\n1. Print the books in the library" +
+                    "\n2. Add books to the library" +
+                    "\n3. Remove a book from the library"));
             switch (input) {
                 case 1:
-                    System.out.println(printBooks().size() == 0 ? "No books stored in the library" : String.join("\n", printBooks()));
+                    System.out.println(formatBooks().size() == 0 ? "No books stored in the library" : String.join("\n", formatBooks()));
                     validInput = true;
                     break;
                 case 2:
@@ -134,11 +129,34 @@ public class Main {
     }
 
     public static void deleteBook() {
-        System.out.println("Enter the name of the book you want to delete");
-        String name = scanner.next();
+        String name = getInput("Enter the name of the book you want to delete");
         ArrayList<String> books = readFile();
         System.out.println(books.size());
+        System.out.println(name);
         //not finished
         System.out.println("Among Us");
+    }
+
+    public static Boolean logIn() {
+        String username = getInput("Enter username");
+        String password = getInput("Enter password");
+
+        return true;
+    }
+
+    public static Boolean register() {
+        Boolean valid = false;
+        String username = getInput("Enter username");
+        String password = getInput("Enter password");
+        Pattern usernamePattern = Pattern.compile("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = usernamePattern.matcher(username);
+        if (!matcher.matches()) {
+            System.out.println("Invalid email");
+        } else if(password.length() < 8) {
+            // need to finish with more regex
+        } else {
+            valid = true;
+        }
+        return valid;
     }
 }
