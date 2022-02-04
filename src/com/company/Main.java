@@ -13,9 +13,10 @@ public class Main {
     private static ArrayList<String> admins = new ArrayList<>();
 
     public static void main(String[] args) {
-        if(!logIn()) return;
+        if(!login()) return;
         createFiles();
-        readFile();
+        readAdminFile();
+        readLibraryFile();
         menu();
     }
 
@@ -67,20 +68,36 @@ public class Main {
         }
     }
 
-    public static void readFile() {
+    public static void readLibraryFile() {
         ArrayList<String> booksFromFile = new ArrayList<>();
         try {
-            Scanner myReader = new Scanner(library);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
+            Scanner myLibraryReader = new Scanner(library);
+            while (myLibraryReader.hasNextLine()) {
+                String data = myLibraryReader.nextLine();
                 booksFromFile.add(data + "\n");
             }
-            myReader.close();
+            myLibraryReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred while reading the library.txt file.");
+            System.out.println("An error occurred while reading the files.");
             e.printStackTrace();
         }
         books = booksFromFile;
+    }
+
+    public static void readAdminFile() {
+        ArrayList<String> adminsFromFile = new ArrayList<>();
+        try {
+            Scanner myAdminReader = new Scanner(adminsFile);
+            while (myAdminReader.hasNextLine()) {
+                String data = myAdminReader.nextLine();
+                adminsFromFile.add(data + "\n");
+            }
+            myAdminReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred while reading the file");
+            e.printStackTrace();
+        }
+        admins = adminsFromFile;
     }
 
     public static ArrayList<String> formatBooks() {
@@ -127,6 +144,7 @@ public class Main {
                         break;
                     case 5:
                         run = false;
+                        validInput = true;
                         break;
                     default:
                         System.out.println("Invalid input");
@@ -143,7 +161,8 @@ public class Main {
         System.out.println("Among Us");
     }
 
-    public static Boolean logIn() {
+    public static Boolean login() {
+        if (admins.size() == 0) return true;
         String username = getInput("Enter username");
         String password = getInput("Enter password");
 
@@ -168,4 +187,9 @@ public class Main {
             System.out.println("Added admin to library");
         }
     }
+
+    public static void endProgram() {
+
+    }
+
 }
