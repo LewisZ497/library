@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -155,18 +156,15 @@ public class Main {
 
     public static void deleteBook() {
         String name = getInput("Enter the name of the book you want to delete");
-        System.out.println(books.size());
-        System.out.println(name);
-        //not finished
-        System.out.println("Among Us");
     }
 
     public static Boolean login() {
         if (admins.size() == 0) return true;
         String username = getInput("Enter username");
         String password = getInput("Enter password");
-
-        return true;
+        Stream<String> admin = admins.stream().filter(a -> a.startsWith(username));
+        if (!admin.findAny().isPresent()) return false;
+        return Objects.requireNonNull(admin.findFirst().orElse(null)).split(" ")[1].equalsIgnoreCase(password);
     }
 
     public static void register() {
@@ -178,10 +176,8 @@ public class Main {
         Matcher passwordMatcher = passwordPattern.matcher(password);
         if (!usernameMatcher.matches()) {
             System.out.println("Invalid email");
-            return;
         } else if(!passwordMatcher.matches()) {
             System.out.println("Invalid password. It must have at least one number, one lower case letter, and one upper case letter");
-            return;
         } else {
             admins.add(username + " " + password);
             System.out.println("Added admin to library");
